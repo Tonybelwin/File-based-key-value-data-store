@@ -1,0 +1,172 @@
+package fresherwork;
+import java.util.*;
+import java.lang.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+ 
+class subclass
+{
+    JSONObject employeeDetails;
+    @SuppressWarnings("unchecked")
+    //create method 
+    public void create() throws Exception
+    {
+        //student details
+        System.out.println("Creation process...");
+        employeeDetails = new JSONObject();
+        employeeDetails.put("firstName","Tony");
+        //created with existing key so this key will not be inserted 
+        employeeDetails.put("firstName","Tony");
+        System.out.println(employeeDetails);
+        //Here we have changed the value of existing key; here it will not create a new key rather it updates only the value of existing key
+        employeeDetails.put("firstName","TonyJ");
+        employeeDetails.put("lastName", "Belwin");
+         System.out.println(employeeDetails);
+        employeeDetails.put("clg.name", "SSSS");
+         System.out.println(employeeDetails);
+        employeeDetails.put("register.no", "13456789");
+         System.out.println(employeeDetails);
+        employeeDetails.put("Area","kpuram");
+         System.out.println(employeeDetails);
+        employeeDetails.put("city","Chennai");
+         System.out.println(employeeDetails);
+        employeeDetails.put("Postalcode","600000");
+         System.out.println(employeeDetails);
+        employeeDetails.put("nation","India");
+         System.out.println(employeeDetails);
+        employeeDetails.put("phn.num","1234567890");
+        System.out.println(employeeDetails);
+        System.out.println("");
+        
+        //Writing into JSON file
+       try (FileWriter file = new FileWriter("employees.json")) {
+ 
+            file.write(employeeDetails.toString());
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @SuppressWarnings("unchecked")
+    //read method
+    public void read() throws Exception
+    {
+      // parsing file "employees.json" 
+        Object obj = new JSONParser().parse(new FileReader("employees.json")); 
+          
+        // typecasting obj to JSONObject 
+        JSONObject jo = (JSONObject) obj; 
+        System.out.println("Reading process...");
+        System.out.println(employeeDetails);
+        // getting values of each  and every  key
+        String firstName = (String) jo.get("firstName"); 
+        //here we are trying to extract the value of middle name, but it doesn't exist so it will print as NULL
+        String middleName = (String) jo.get("middleName");
+        String lastName = (String) jo.get("lastName"); 
+        String clgName=(String)jo.get("clg.name");
+        String registerNumber=(String)jo.get("register.no");
+        String  area= (String) jo.get("Area");
+        String  City= (String) jo.get("city");
+        String  postalcode= (String) jo.get("Postalcode");
+        String  nation= (String) jo.get("nation");
+        String  phoneNumber= (String) jo.get("phn.num");
+        System.out.println();
+        System.out.println("Reading each and every key of json object");
+        System.out.println(firstName);
+        //here it prints as NULL beacause the key doesn't exist
+        System.out.println(middleName); 
+        System.out.println(lastName); 
+        System.out.println(clgName); 
+        System.out.println(registerNumber);
+        System.out.println(area);
+        System.out.println(City);
+        System.out.println(postalcode);
+        System.out.println(nation);
+        System.out.println(phoneNumber);
+        System.out.println("Reading specific key of json object");
+        System.out.println(lastName);
+        System.out.println("");
+        } 
+    public void delete()
+    {
+        
+         System.out.println("Before deletion process...");
+        System.out.println(employeeDetails);
+        //deleting register nuumber 
+         employeeDetails.remove("register.no");   
+         System.out.println("After deletion process 1...");
+         System.out.println(employeeDetails);
+          System.out.println("After deletion process 2...");
+          //deletinng nation 
+          employeeDetails.remove("nation");   
+          System.out.println(employeeDetails);
+         System.out.println("After deletion process 3...");
+         //deleting area,postalcode and city
+          employeeDetails.remove("Area");
+          employeeDetails.remove("Postalcode");
+          employeeDetails.remove("city");
+          //here we are trying to remove or delete a key which doesn't exist,so here nothing will happen
+          employeeDetails.remove("place");
+          System.out.println(employeeDetails);
+         
+         
+    }
+    
+ }
+
+public class Fresherwork extends subclass
+{
+    public static void main(String args[]) throws Exception
+    {
+        subclass sc=new subclass();
+        sc.create();
+        sc.read();
+        sc.delete();
+    }
+} 
+
+/*OUTPUT:
+Creation process...
+{"firstName":"Tony"}
+{"firstName":"TonyJ","lastName":"Belwin"}
+{"firstName":"TonyJ","lastName":"Belwin","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","register.no":"13456789","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","register.no":"13456789","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","register.no":"13456789","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","Postalcode":"600000","register.no":"13456789","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","nation":"India","Postalcode":"600000","register.no":"13456789","clg.name":"SSSS"}
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","nation":"India","Postalcode":"600000","phn.num":"1234567890","register.no":"13456789","clg.name":"SSSS"}
+
+Reading process...
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","nation":"India","Postalcode":"600000","phn.num":"1234567890","register.no":"13456789","clg.name":"SSSS"}
+
+Reading each and every key of json object
+TonyJ
+null
+Belwin
+SSSS
+13456789
+kpuram
+Chennai
+600000
+India
+1234567890
+Reading specific key of json object
+Belwin
+
+Before deletion process...
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","nation":"India","Postalcode":"600000","phn.num":"1234567890","register.no":"13456789","clg.name":"SSSS"}
+After deletion process 1...
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","nation":"India","Postalcode":"600000","phn.num":"1234567890","clg.name":"SSSS"}
+After deletion process 2...
+{"firstName":"TonyJ","lastName":"Belwin","Area":"kpuram","city":"Chennai","Postalcode":"600000","phn.num":"1234567890","clg.name":"SSSS"}
+After deletion process 3...
+{"firstName":"TonyJ","lastName":"Belwin","phn.num":"1234567890","clg.name":"SSSS"}
+*/
